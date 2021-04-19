@@ -101,7 +101,7 @@ header img {
   width: 13px;
   height: 8px;
   margin-left: 10px;
-  background-image: url("./assets/icons/arrow_down.svg");
+  background-image: url("../assets/icons/arrow_down.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -133,7 +133,7 @@ main {
   height: 200px;
   margin: 0 auto;
   margin-bottom: 40px;
-  background-image: url("./assets/imgs/Bitcoin.svg");
+  background-image: url("../assets/imgs/Bitcoin.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -254,7 +254,7 @@ main {
   width: 15px;
   height: 15px;
   margin-left: 10px;
-  background-image: url("./assets/icons/trending-down_1.svg");
+  background-image: url("../assets/icons/trending-down_1.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -265,7 +265,7 @@ main {
   width: 15px;
   height: 15px;
   margin-left: 10px;
-  background-image: url("./assets/icons/trending-up.svg");
+  background-image: url("../assets/icons/trending-up.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -313,7 +313,7 @@ main {
   height: 25px;
   top: -10px;
   left: calc(50% - 20px);
-  background-image: url("./assets/icons/bit.svg");
+  background-image: url("../assets/icons/bit.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -377,26 +377,26 @@ main {
   display: inline-block;
   width: 24px;
   height: 24px;
-  background-image: url("./assets/icons/clock.svg");
+  background-image: url("../assets/icons/clock.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 .eye {
-  background-image: url("./assets/icons/eye.svg");
+  background-image: url("../assets/icons/eye.svg");
 }
 .dollar {
-  background-image: url("./assets/icons/dollar-sign.svg");
+  background-image: url("../assets/icons/dollar-sign.svg");
 }
 .check {
-  background-image: url("./assets/icons/check-circle.svg");
+  background-image: url("../assets/icons/check-circle.svg");
 }
 
 .bitcoin-img-container {
   width: 100%;
   min-width: 320px;
   height: 50vh;
-  background-image: url("./assets/imgs/bitcoinbaby2x.jpg");
+  background-image: url("../assets/imgs/bitcoinbaby2x.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -534,7 +534,7 @@ main {
   width: 20px;
   height: 20px;
   margin-left: 10px;
-  background-image: url("./assets/icons/arrow-right2.svg");
+  background-image: url("../assets/icons/arrow-right2.svg");
   vertical-align: text-bottom;
 }
 
@@ -561,4 +561,9 @@ footer {
 .footer--social a {
   text-decoration: none;
   color: var(--just-white);
+}
+
+footer img {
+  width: 64px;
+  height: 50px;
 }
