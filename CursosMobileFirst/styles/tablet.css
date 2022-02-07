@@ -1,0 +1,18 @@
+.header--title-container {
+  margin-top: 60px;
+}
+.product-cards--container {
+  display: flex;
+  max-width: 900px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.footer--social ul {
+  flex-direction: row;
+}
+
+.footer--social li {
+  margin: 5px 20px;
+}

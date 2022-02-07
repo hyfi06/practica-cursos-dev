@@ -1,0 +1,90 @@
+:root {
+  --black: rgba(0, 0, 0, 0.87);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: Arial, sans-serif;
+}
+
+.main-nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  padding: 5px 15px;
+}
+
+.main-nav ul {
+  display: flex;
+  height: 100%;
+  justify-content: flex-end;
+  align-items: center;
+  list-style: none;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 2.4rem;
+}
+
+.main-nav li {
+  margin-left: 15px;
+}
+
+.main-nav a {
+  height: 32px;
+  color: var(--black);
+  text-decoration: none;
+}
+
+.main-nav .nav-app-container {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.nav-app-container div {
+  margin-left: 20px;
+  height: fit-content;
+}
+
+.nav-app-container .nap-app__menu {
+  width: 16px;
+  height: 16px;
+}
+
+.nav-app-container .nap-app__avatar {
+  width: 32px;
+  height: 32px;
+  clip-path: circle();
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.main-hero {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 560px);
+  max-height: 280px;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.main-hero img {
+  margin: 0 auto;
+  width: 270px;
+}
+
+.main-search {
+  width: 100%;
+}
