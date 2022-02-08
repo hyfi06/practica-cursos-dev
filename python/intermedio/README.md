@@ -43,3 +43,15 @@ Instalar dependencias desde el archivo requirements.txt
 ```bash
 pip install -r requirements.txt
 ```
+
+## List comprehensions
+
+```python
+my_list = [ i for i in iterable if condition ]
+```
+
+## Dictionary comprehensions
+
+```python
+my_dict = { key: value for value in iterable if condition }
+```
