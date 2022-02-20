@@ -55,3 +55,76 @@ my_list = [ i for i in iterable if condition ]
 ```python
 my_dict = { key: value for value in iterable if condition }
 ```
+
+## Lambda functions
+
+```python
+lambda arguments: expression
+```
+
+## High order functions
+
+Funciones que reciben como parámetros otras funciones.
+
+### filter()
+
+```python
+filter(function, my_list)
+```
+
+### map()
+
+```python
+map(funtion, my_list)
+```
+
+### reduce()
+
+```python
+from functools import reduce
+
+reduce(function(pre,curr),my_list)
+```
+
+## Exceptions
+
+[Documentación](https://docs.python.org/3/tutorial/errors.html)
+
+```python
+try:
+    pass
+  except Exception:
+    pass
+  else:
+    pass
+  finally:
+    pass
+```
+
+## Assert statements
+
+```python
+assert condition, error_message
+```
+
+## files
+
+### Read
+
+```python
+with open(file, "r", encoding='utf-8') as f:
+  for line in f:
+    pass
+```
+
+### Write
+
+```python
+with open(file, "w", encoding='utf-8') as f:
+   f.write(data)
+```
+
+```python
+with open(file, "a", encoding='utf-8') as f:
+   f.write(data)
+```
