@@ -4,6 +4,13 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+# Utilities
+import os
+
+def user_directory_path(instance, filename):
+    file_root, file_ext = os.path.splitext(filename)
+    return f'users/profile_pictures/{instance.user.username}{file_ext}'
+
 
 class Profile(models.Model):
     """Profile model.
@@ -19,9 +26,9 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=20, blank=True)
 
     picture = models.ImageField(
-        upload_to='users/profile_pictures',
+        upload_to=user_directory_path,
         blank=True,
-        null=True
+        null=True,
     )
 
     created = models.DateTimeField(auto_now_add=True)
