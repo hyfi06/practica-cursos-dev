@@ -144,3 +144,143 @@ class EventNumbers:
     else:
         raise StopIteration
 ```
+
+## Generadores
+
+Funciones que guardan un estado, sugar syntax
+
+```python
+
+def my_gen():
+    """Un ejemplo de generadores"""
+    print("Hello world")
+    n = 0
+    yield n
+
+    print("Hello haven")
+    n = 1
+    yield n
+
+    print("Hello hell")
+    n = 2
+    yield n
+
+example_gen = my_gen()
+print(next(example_gen)) # 0
+print(next(example_gen)) # 1
+print(next(example_gen)) # 2
+print(next(example_gen)) # StopIteration
+```
+
+### Generator expression
+
+```python
+my_list = [0,1,4,7,9,10]
+
+my_second_list = [x*2 for x in my_list] # List comprehension
+my_second_gen = (x*2 for x in my_list) # Generator expression
+```
+
+## Sets
+
+Una colección de desordenada de elementos únicos e inmutables
+
+```python
+my_set = {3,4,5}
+print("my_set = ",my_set)
+```
+
+### Empty set
+
+```python
+empty_set = set()
+```
+
+### Casting
+
+```python
+my_list = [1,1,2,3,4,4,5]
+my_set = set(my_list)
+print(my_list)
+```
+
+### Add to a set
+
+```python
+my_set = {1,2,3}
+print(my_set)
+
+my_set.add(4)
+print(my_set)
+
+my_set.update([1,2,5])
+print(my_set)
+
+my_set.update((1,7,2),{6,8})
+print(my_set)
+```
+
+### Remove elemento of set
+
+```python
+my_set = {1,2,3,4,5,6,7}
+
+my_set.discard(1)
+my_set.remove(2)
+my_set.discard(10)
+my_set.remove(12) # KeyError
+```
+
+```python
+my_set.pop()
+my_set.clear()
+```
+
+### Operaciones
+
+```python
+my_set1 = {3, 4, 5}
+my_set2 = {5, 6, 7}
+
+union = my_set1 | my_set2
+print(union)
+intersection = my_set1 & my_set2
+print(intersection)
+diff1 = my_set1 - my_set2
+print(diff1)
+diff2 = my_set2 - my_set1
+print(diff2)
+
+sdiff = my_set1 ^ my_set2
+print(sdiff)
+```
+
+## Fechas
+
+```python
+import datetime
+my_time = datetime.datetime.now()
+
+print(my_time)
+my_day = datetime.date.today()
+print(my_dat.year)
+print(my_dat.month)
+print(my_dat.day)
+```
+
+### Formateo de fechas
+
+```python
+from datetime import datetime
+my_datetime = datetime.now()
+my_str = my_datetime.strftime('%d/%m/%Y')
+print(f'Formato LATAM: {my_str}')
+```
+
+
+### Time zones
+
+```python
+import pytz
+
+```
