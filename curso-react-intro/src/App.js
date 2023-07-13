@@ -1,9 +1,12 @@
-import logo from './platzi.webp';
-import './App.css';
+import logo from "./platzi.webp";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
+      <TodoItem />
+      <TodoItem />
+      <TodoItem />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -19,6 +22,24 @@ function App() {
         </a>
       </header>
     </div>
+  );
+}
+
+function TodoItem() {
+  return (
+    <li>
+      <span>V</span>
+      <p>Llorar con la Llorona</p>
+      <span>X</span>
+    </li>
+  );
+}
+
+function TodoCount(props) {
+  return (
+    <h1>
+      Completaste {props.completaste} de {props.total} TODOs.
+    </h1>
   );
 }
 
