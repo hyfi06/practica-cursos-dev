@@ -1,11 +1,10 @@
 import "../CreateTodoButton/CreateTodoButton.css";
-function CreateTodoButton() {
+function CreateTodoButton({setModalState}) {
   return (
     <button
       className="CreateTodoButton"
       onClick={(event) => {
-        console.log("le diste clic");
-        console.log(event.target)
+        setModalState('flex')
       }}
     >
       +
