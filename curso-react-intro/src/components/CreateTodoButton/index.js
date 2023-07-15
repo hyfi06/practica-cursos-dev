@@ -1,10 +1,13 @@
-import "../CreateTodoButton/CreateTodoButton.css";
-function CreateTodoButton({setModalState}) {
+import React from "react";
+import "./CreateTodoButton.css";
+import { TodoContext } from "../TodoContext";
+function CreateTodoButton() {
+  const { setModalState } = React.useContext(TodoContext);
   return (
     <button
       className="CreateTodoButton"
       onClick={(event) => {
-        setModalState('flex')
+        setModalState("flex");
       }}
     >
       +

@@ -4,6 +4,7 @@
   cursor: pointer;
   color: #6495ed;
   transition: transform .2s ease;
+  height: 24px;
 }
 
 .Icon-svg {

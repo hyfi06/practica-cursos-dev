@@ -1,6 +1,5 @@
 .modal {
   position: fixed;
-  z-index: 1;
   left: 0;
   top: 0;
   width: 100%;
@@ -15,6 +14,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   max-width: 1024px;
   width: 50%;
   background-color: #ecf2fd;
@@ -22,13 +22,17 @@
   padding: 36px;
   box-shadow: 0px 6px 24px rgb(100, 149, 237, 0.5);
   @media screen and (max-width: 600px) {
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    background-color: rgba(236, 242, 253,0.9);
   }
 }
 .modal-content > h2 {
   font-size: 36px;
   font-weight: normal;
   margin-bottom: 48px;
+  text-align: center;
 }
 
 .input-new-todo {

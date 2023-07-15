@@ -1,31 +1,31 @@
+import React from "react";
 import "./TodoCounter.css";
+import { TodoContext } from "../TodoContext";
 
-function TodoCounter({ total, completed }) {
+function TodoCounter() {
+  const { loading, error, totalTodos, completedTodos } =
+    React.useContext(TodoContext);
   return (
     <>
-      <h1
-        style={{
-          display: total == 0 ? "block" : "none",
-        }}
-        className="TodoCounter"
-      >
-        ¡Crea nuevos TODOs!
-      </h1>
-      <h1
-        style={{
-          display: total != completed ? "block" : "none",
-        }}
-        className="TodoCounter"
-      >
-        Has completado <b>{completed}</b> de <b>{total}</b> TODOs
-      </h1>
-      <h1
-        style={{
-          display: total != 0 && total == completed ? "block" : "none",
-        }}
-        className="TodoCounter"
-      >
-        ¡Completaste todos los TODOs! <b>{completed}</b> de <b>{total}</b>
+      <h1 className="TodoCounter">
+        {loading && <>TODOs App</>}
+        {(error || (!loading && totalTodos === 0)) && <>TODOs App</>}
+
+        {!error && !loading && totalTodos !== completedTodos && (
+          <>
+            Has completado <b>{completedTodos}</b> de <b>{totalTodos}</b> TODOs
+          </>
+        )}
+
+        {!error &&
+          !loading &&
+          totalTodos !== 0 &&
+          totalTodos === completedTodos && (
+            <>
+              ¡Completaste todos los TODOs! <br /> <b>{completedTodos}</b> de{" "}
+              <b>{totalTodos}</b>
+            </>
+          )}
       </h1>
     </>
   );

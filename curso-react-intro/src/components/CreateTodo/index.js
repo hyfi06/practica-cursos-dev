@@ -1,7 +1,10 @@
 import React from "react";
 import "./CreateTodo.css";
+import { TodoContext } from "../TodoContext";
 
-function CreateTodo({ modalState, setModalState, onCreate }) {
+function CreateTodo() {
+  const { modalState, setModalState, createTodo } =
+    React.useContext(TodoContext);
   const [newTodoText, setNewTodoTex] = React.useState("");
   return (
     <div
@@ -23,7 +26,7 @@ function CreateTodo({ modalState, setModalState, onCreate }) {
         <div className="modal-button-section">
           <button
             className="button button--cancel"
-            onClick={(event) => {
+            onClick={() => {
               setModalState("none");
             }}
           >
@@ -31,9 +34,9 @@ function CreateTodo({ modalState, setModalState, onCreate }) {
           </button>
           <button
             className="button button--primary"
-            onClick={(event) => {
+            onClick={() => {
               if (newTodoText != "") {
-                onCreate(newTodoText);
+                createTodo(newTodoText);
                 setNewTodoTex("");
                 setModalState("none");
               }
