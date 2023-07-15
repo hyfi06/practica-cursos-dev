@@ -6,11 +6,10 @@ import { TodoItem } from "./components/TodoItem/TodoItem";
 import { CreateTodoButton } from "./components/CreateTodoButton/CreateTodoButton";
 import { CreateTodo } from "./components/CreateTodo/CreateTodo";
 
+import { useLocalStorage } from "./hooks/useLocalStorage";
 
 function App() {
-  const localStorageTODOS = localStorage.getItem("TODOS_V1") || "[]";
-  const parserTodos = JSON.parse(localStorageTODOS);
-  const [todos, setTodos] = React.useState(parserTodos);
+  const [todos, saveTodos] = useLocalStorage("TODOS_V1", []);
   const [searchValue, setSearchValue] = React.useState("");
   const [modalState, setModalState] = React.useState("none");
   const completedTodos = todos.filter((todo) => todo.completed).length;
@@ -18,11 +17,6 @@ function App() {
   const searchedTodos = todos.filter((todo) =>
     RegExp(`.*${searchValue}.*`, "i").test(todo.text)
   );
-
-  const saveTodos = (newTodos) => {
-    localStorage.setItem("TODOS_V1", JSON.stringify(newTodos));
-    setTodos(newTodos);
-  };
 
   const competeTodo = (text) => () => {
     const newTodos = [...todos];
