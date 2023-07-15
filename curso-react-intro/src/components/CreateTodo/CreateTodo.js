@@ -1,7 +1,7 @@
 import React from "react";
 import "./CreateTodo.css";
 
-function CreateTodo({ todos, setTodos, modalState, setModalState }) {
+function CreateTodo({ modalState, setModalState, onCreate }) {
   const [newTodoText, setNewTodoTex] = React.useState("");
   return (
     <div
@@ -33,13 +33,7 @@ function CreateTodo({ todos, setTodos, modalState, setModalState }) {
             className="button button--primary"
             onClick={(event) => {
               if (newTodoText != "") {
-                setTodos([
-                  {
-                    text: newTodoText,
-                    completed: false,
-                  },
-                  ...todos,
-                ]);
+                onCreate(newTodoText);
                 setNewTodoTex("");
                 setModalState("none");
               }

@@ -5,7 +5,7 @@ import "./TodoIcon.css";
 
 const iconTypes = {
   check: (color) => <CheckSvg className="Icon-svg" fill={color} />,
-  delete: (color) => <DeleteSvg className="Icon-svg Icon-svg-delete" fill={color} />,
+  delete: (color) => <DeleteSvg className="Icon-svg" fill={color} />,
 };
 
 function TodoIcon({ type, color, clickAction }) {

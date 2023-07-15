@@ -6,27 +6,11 @@ import { TodoItem } from "./components/TodoItem/TodoItem";
 import { CreateTodoButton } from "./components/CreateTodoButton/CreateTodoButton";
 import { CreateTodo } from "./components/CreateTodo/CreateTodo";
 
-const defaultTodos = [
-  {
-    text: "Cortar cebolla",
-    completed: true,
-  },
-  {
-    text: "Tomar el Curso de Intro a React.js",
-    completed: false,
-  },
-  {
-    text: "Llorar con la Llorona",
-    completed: true,
-  },
-  {
-    text: "Ver Lalaland",
-    completed: false,
-  },
-];
 
 function App() {
-  const [todos, setTodos] = React.useState(defaultTodos);
+  const localStorageTODOS = localStorage.getItem("TODOS_V1") || "[]";
+  const parserTodos = JSON.parse(localStorageTODOS);
+  const [todos, setTodos] = React.useState(parserTodos);
   const [searchValue, setSearchValue] = React.useState("");
   const [modalState, setModalState] = React.useState("none");
   const completedTodos = todos.filter((todo) => todo.completed).length;
@@ -35,18 +19,35 @@ function App() {
     RegExp(`.*${searchValue}.*`, "i").test(todo.text)
   );
 
+  const saveTodos = (newTodos) => {
+    localStorage.setItem("TODOS_V1", JSON.stringify(newTodos));
+    setTodos(newTodos);
+  };
+
   const competeTodo = (text) => () => {
     const newTodos = [...todos];
     const todoIndex = newTodos.findIndex((todo) => todo.text == text);
     newTodos[todoIndex].completed = !newTodos[todoIndex].completed;
-    setTodos(newTodos);
+    saveTodos(newTodos);
   };
 
   const deleteTodo = (text) => () => {
     const newTodos = [...todos];
     const todoIndex = newTodos.findIndex((todo) => todo.text == text);
     newTodos.splice(todoIndex, 1);
-    setTodos(newTodos);
+    saveTodos(newTodos);
+  };
+
+  const createTodo = (text) => {
+    if (text != "") {
+      const newTodos = [...todos];
+      const newTodo = {
+        text,
+        completed: false,
+      };
+      newTodos.unshift(newTodo);
+      saveTodos(newTodos);
+    }
   };
 
   return (
@@ -66,8 +67,7 @@ function App() {
       </TodoList>
       <CreateTodoButton setModalState={setModalState} />
       <CreateTodo
-        todos={todos}
-        setTodos={setTodos}
+        onCreate={createTodo}
         modalState={modalState}
         setModalState={setModalState}
       />
