@@ -1,0 +1,13 @@
+.TodoCounter {
+  font-size: 36px;
+  text-align: center;
+  margin: 0;
+  padding: 48px;
+  font-weight: normal;
+  width: 80%;
+  min-width: 300px;
+}
+
+.TodoCounter > b {
+  color: #6495ed;
+}

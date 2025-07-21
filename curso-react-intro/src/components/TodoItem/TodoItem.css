@@ -1,0 +1,18 @@
+.TodoItem {
+  padding: 12px;
+  margin: 24px;
+  font-size: 24px;
+  border-radius: 24px;
+  background-color: #d8e5fa;
+  min-width: 300px;
+  width: 80%;
+  text-align: center;
+  box-shadow: 0px 6px 24px rgba(100, 149, 237, 0.502);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.TodoItem-p--complete {
+  text-decoration: line-through;
+}
