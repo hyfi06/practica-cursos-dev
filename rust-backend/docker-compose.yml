@@ -1,0 +1,23 @@
+volumes:
+  blog_db: {}
+  blog_db_backups: {}
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: ./compose/db/Dockerfile
+    image: blog_db
+    volumes:
+      - blog_db:/var/lib/postgresql/data
+      - blog_db_backups:/backups
+    env_file:
+      - ./rust-blog/.env
+    ports:
+      - "5432:5432"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
