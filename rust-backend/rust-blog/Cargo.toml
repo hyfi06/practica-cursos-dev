@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-diesel = { version = "2.2.0", features = ["postgres"] }
+actix-web = { version = "4.11.0", features = ["secure-cookies"] }
+diesel = { version = "2.2.0", features = ["postgres", "r2d2"] }
 dotenvy = "0.15"
 serde = { version = "1.0.219", features = ["derive"] }
