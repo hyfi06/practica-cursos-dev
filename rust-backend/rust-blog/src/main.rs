@@ -12,29 +12,40 @@ use diesel::r2d2::{self, ConnectionManager, Pool};
 pub mod models;
 pub mod schema;
 
+use models::{NewPost, Post};
+use schema::posts;
+use schema::posts::dsl::*;
+
+pub type DbPool = r2d2::Pool<ConnectionManager<PgConnection>>;
+
 #[get("/")]
-async fn hello_world() -> impl Responder {
-    HttpResponse::Ok().body("Hello world")
+async fn index(pool: web::Data<DbPool>) -> impl Responder {
+    let mut conn = pool.get().expect("Problemas al traer la base de datos");
+    match web::block(move || posts.load::<Post>(&mut conn)).await {
+        Ok(data) => HttpResponse::Ok().json(data.unwrap()),
+        Err(err) => HttpResponse::Ok().body("Hubo un error"),
+    }
 }
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     dotenv().ok();
     let db_url = env::var("DATABASE_URL").expect("db url not found");
     let conn = ConnectionManager::<PgConnection>::new(db_url);
-    let pool = Pool::builder()
+    let pool: DbPool = Pool::builder()
         .build(conn)
         .expect("Could not build connection pool");
 
-    HttpServer::new(move || App::new().app_data(pool.clone()).service(hello_world))
-        .bind(("127.0.0.1", 9900))?
-        .run()
-        .await
+    HttpServer::new(move || {
+        App::new()
+            .app_data(web::Data::new(pool.clone()))
+            .service(index)
+    })
+    .bind(("127.0.0.1", 9900))?
+    .run()
+    .await
 
     // let mut conn = PgConnection::establish(&db_url).expect("DB no connected");
-
-    // use self::models::{NewPost, Post};
-    // use self::schema::posts;
-    // use self::schema::posts::dsl::*;
 
     // let new_post = NewPost {
     //     title: "Mi tercer post",
