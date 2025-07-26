@@ -1,6 +1,6 @@
-use serde;
+use serde::{Deserialize, Serialize};
 
-#[derive(Queryable, serde::Serialize, Clone, Debug)]
+#[derive(Queryable, Deserialize, Serialize, Clone, Debug)]
 pub struct Post {
     pub id: i32,
     pub title: String,
@@ -16,4 +16,10 @@ pub struct NewPost<'a> {
     pub title: &'a str,
     pub slug: &'a str,
     pub body: &'a str,
+}
+
+#[derive(Deserialize, Serialize, Clone, Debug)]
+pub struct NewPostHandler {
+    pub title: String,
+    pub body: String,
 }
