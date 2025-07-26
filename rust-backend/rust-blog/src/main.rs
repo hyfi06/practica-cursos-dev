@@ -12,8 +12,7 @@ use diesel::r2d2::{self, ConnectionManager, Pool};
 pub mod models;
 pub mod schema;
 
-use models::{NewPost, Post, NewPostHandler};
-use schema::posts;
+use models::{NewPostHandler, Post};
 use schema::posts::dsl::*;
 
 pub type DbPool = r2d2::Pool<ConnectionManager<PgConnection>>;
@@ -28,21 +27,10 @@ async fn index(pool: web::Data<DbPool>) -> impl Responder {
 }
 
 #[post("/new-post")]
-async fn new_post(pool: web::Data<DbPool>) -> impl Responder {
+async fn new_post(pool: web::Data<DbPool>, item: web::Json<NewPostHandler>) -> impl Responder {
     let mut conn = pool.get().expect("Problemas con traer la base de datos");
 
-    let new_post = NewPost {
-        title: "Mi post",
-        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi libero odio, commodo a consectetur ut, ultrices nec libero. Integer suscipit mi nunc, ut vulputate felis lacinia nec. Praesent nec sem turpis. Maecenas aliquam non nunc ut bibendum. Donec eget condimentum metus, eu venenatis enim. Cras porttitor facilisis nisl, at pretium elit facilisis a. Duis ultricies et lacus eu bibendum. Curabitur quis enim convallis, gravida orci eu, eleifend sapien.",
-        slug: "mi-post",
-    };
-    match web::block(move || {
-        diesel::insert_into(posts::table)
-            .values(new_post)
-            .get_result::<Post>(&mut conn)
-    })
-    .await
-    {
+    match web::block(move || Post::create_post(&mut conn, &item)).await {
         Ok(post) => HttpResponse::Ok().json(post.unwrap()),
         Err(err) => HttpResponse::Ok().body(format!("Error: {}", err)),
     }
@@ -66,21 +54,4 @@ async fn main() -> std::io::Result<()> {
     .bind(("127.0.0.1", 9900))?
     .run()
     .await
-
-    // let mut conn = PgConnection::establish(&db_url).expect("DB no connected");
-
-    // let new_post = NewPost {
-    //     title: "Mi tercer post",
-    //     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi libero odio, commodo a consectetur ut, ultrices nec libero. Integer suscipit mi nunc, ut vulputate felis lacinia nec. Praesent nec sem turpis. Maecenas aliquam non nunc ut bibendum. Donec eget condimentum metus, eu venenatis enim. Cras porttitor facilisis nisl, at pretium elit facilisis a. Duis ultricies et lacus eu bibendum. Curabitur quis enim convallis, gravida orci eu, eleifend sapien.",
-    //     slug: "tercer-post",
-    // };
-    // let _post: Post = diesel::insert_into(posts::table)
-    //     .values(&new_post)
-    //     .get_result(&mut conn)
-    //     .expect("Insert post error");
-
-    // let posts_list = posts.limit(1).load::<Post>(&mut conn).expect("Query error");
-    // for post in posts_list {
-    //     println!("{:?}", post);
-    // }
 }
