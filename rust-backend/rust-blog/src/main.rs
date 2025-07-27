@@ -16,19 +16,44 @@ use schema::posts::dsl::*;
 
 pub type DbPool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
-#[get("/tera-test")]
-async fn tera_test(template_manager: web::Data<Tera>) -> impl Responder {
-    let ctx = Context::new();
-
-    HttpResponse::Ok()
-        .content_type("text/html")
-        .body(template_manager.render("index.html", &ctx).unwrap())
-}
 #[get("/")]
-async fn index(pool: web::Data<DbPool>) -> impl Responder {
+async fn index(pool: web::Data<DbPool>, tmplt_mngr: web::Data<Tera>) -> impl Responder {
     let mut conn = pool.get().expect("Problemas al traer la base de datos");
+
     match web::block(move || posts.load::<Post>(&mut conn)).await {
-        Ok(data) => HttpResponse::Ok().json(data.unwrap()),
+        Ok(data) => {
+            let mut ctx = Context::new();
+            ctx.insert("posts", &(data.unwrap()));
+            HttpResponse::Ok()
+                .content_type("text/html")
+                .body(tmplt_mngr.render("index.html", &ctx).unwrap())
+        }
+        Err(_) => HttpResponse::Ok().body("Hubo un error"),
+    }
+}
+
+#[get("/blog/{post_slug}")]
+async fn get_post(
+    pool: web::Data<DbPool>,
+    tmplt_mngr: web::Data<Tera>,
+    post_slug: web::Path<String>,
+) -> impl Responder {
+    let mut conn = pool.get().expect("Problemas al traer la base de datos");
+    let post_slug: String = post_slug.into_inner();
+    match web::block(move || posts.filter(slug.eq(post_slug)).load::<Post>(&mut conn)).await {
+        Ok(data) => {
+            let data = data.unwrap();
+            match data.len() {
+                0 => HttpResponse::NotFound().finish(),
+                _ => {
+                    let mut ctx = Context::new();
+                    ctx.insert("post", &data[0]);
+                    HttpResponse::Ok()
+                        .content_type("text/html")
+                        .body(tmplt_mngr.render("post.html", &ctx).unwrap())
+                }
+            }
+        }
         Err(_) => HttpResponse::Ok().body("Hubo un error"),
     }
 }
@@ -47,6 +72,8 @@ async fn new_post(pool: web::Data<DbPool>, item: web::Json<NewPostHandler>) -> i
 async fn main() -> std::io::Result<()> {
     dotenv().ok();
     let db_url = env::var("DATABASE_URL").expect("db url not found");
+    let port= env::var("PORT").expect("Port not found");
+    let port: u16 = port.parse().unwrap_or(9900);
     let conn = ConnectionManager::<PgConnection>::new(db_url);
     let pool: DbPool = Pool::builder()
         .build(conn)
@@ -59,9 +86,9 @@ async fn main() -> std::io::Result<()> {
             .app_data(web::Data::new(tera.clone()))
             .service(index)
             .service(new_post)
-            .service(tera_test)
+            .service(get_post)
     })
-    .bind(("127.0.0.1", 9900))?
+    .bind(("127.0.0.1", port))?
     .run()
     .await
 }
