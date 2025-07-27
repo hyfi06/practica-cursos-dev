@@ -21,3 +21,18 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+  app:
+    build:
+      context: .
+      dockerfile: ./compose/app/Dockerfile
+    image: blog_app
+    depends_on:
+      - db
+    env_file:
+      - ./rust-blog/.env
+    ports:
+      - "8080:8080"
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
